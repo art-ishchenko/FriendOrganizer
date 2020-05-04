@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using FriendOrganizer.DataAccess;
+using FriendOrganizer.Model;
 using FriendOrganizer.UI.ViewModel;
 
 namespace FriendOrganizer.UI
