@@ -6,7 +6,7 @@ namespace FriendOrganizer.UI.ViewModel
 {
     public interface INavigationViewModel
     {
-        ObservableCollection<LookupItem> Friends { get; set; }
+        ObservableCollection<NavigationItemViewModel> Friends { get; set; }
         Task LoadAsync();
     }
 }

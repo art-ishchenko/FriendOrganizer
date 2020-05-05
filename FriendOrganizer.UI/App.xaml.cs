@@ -35,7 +35,6 @@ namespace FriendOrganizer.UI
             services.AddTransient<IFriendDataService, FriendDataService>();
             services.AddTransient<INavigationViewModel, NavigationViewModel>();
             services.AddTransient<IFriendDetailtViewModel, FriendDetailtViewModel>();
-            services.AddTransient<IFriendLookupDataService, LookupDataService>();
             services.AddSingleton<IEventAggregator, EventAggregator>();
         }
     }

@@ -1,9 +1,11 @@
 ﻿using FriendOrganizer.Model;
 using FriendOrganizer.UI.Data;
 using FriendOrganizer.UI.Event;
+using Prism.Commands;
 using Prism.Events;
 using System;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace FriendOrganizer.UI.ViewModel
 {
@@ -43,5 +45,16 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
+        public ICommand SaveCommand => new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
+        private void OnSaveExecute()
+        {
+            dataService.Save(Friend);
+            eventAggregator.GetEvent<FriendSavedEvent>().Publish(Friend);
+        }
+
+        private bool OnSaveCanExecute()
+        {
+            return true;
+        }
     }
 }
