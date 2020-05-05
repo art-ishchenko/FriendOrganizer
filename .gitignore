@@ -5,6 +5,7 @@
 
 # SqlLite Db
 *.db
+*.db-*
 
 # VS Code
 .vscode
