@@ -1,16 +1,23 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using FriendOrganizer.DataAccess;
 using FriendOrganizer.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace FriendOrganizer.UI.Data
 {
     public class FriendDataService : IFriendDataService
     {
-        public IEnumerable<Friend> GetAll()
+        private readonly AppDbContext ctx;
+
+        public FriendDataService(AppDbContext ctx)
         {
-            yield return new Friend { FirstName = "Thomas", LastName = "Huber" };
-            yield return new Friend { FirstName = "Andreas", LastName = "Boehler" };
-            yield return new Friend { FirstName = "Julia", LastName = "Huber" };
-            yield return new Friend { FirstName = "Chrissi", LastName = "Egin" };
+            this.ctx = ctx;
+        }
+
+        public async Task<IEnumerable<Friend>> GetAllAsync()
+        {
+            return await ctx.Friends.ToListAsync();
         }
     }
 

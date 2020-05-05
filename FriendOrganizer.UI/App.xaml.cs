@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using FriendOrganizer.UI.ViewModel;
 using FriendOrganizer.UI.Data;
 using Microsoft.Extensions.Configuration;
+using FriendOrganizer.DataAccess;
 
 namespace FriendOrganizer.UI
 {
@@ -14,10 +15,10 @@ namespace FriendOrganizer.UI
         public IConfiguration Configuration { get; set; }
         protected override void OnStartup(StartupEventArgs e)
         {
-            Configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .Build();
+            // Configuration = new ConfigurationBuilder()
+            //     .SetBasePath(Directory.GetCurrentDirectory())
+            //     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            //     .Build();
 
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
@@ -28,9 +29,12 @@ namespace FriendOrganizer.UI
 
         private void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<AppDbContext>();
             services.AddTransient<MainViewModel>();
             services.AddTransient<MainWindow>();
             services.AddTransient<IFriendDataService, FriendDataService>();
+            services.AddTransient<INavigationViewModel, NavigationViewModel>();
+            services.AddTransient<IFriendLookupDataService, LookupDataService>();
         }
     }
 }
