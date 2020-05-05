@@ -1,11 +1,11 @@
-﻿using System.IO;
+﻿using FriendOrganizer.DataAccess;
+using FriendOrganizer.UI.Data;
+using FriendOrganizer.UI.ViewModel;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Prism.Events;
 using System;
 using System.Windows;
-using Microsoft.Extensions.DependencyInjection;
-using FriendOrganizer.UI.ViewModel;
-using FriendOrganizer.UI.Data;
-using Microsoft.Extensions.Configuration;
-using FriendOrganizer.DataAccess;
 
 namespace FriendOrganizer.UI
 {
@@ -34,7 +34,9 @@ namespace FriendOrganizer.UI
             services.AddTransient<MainWindow>();
             services.AddTransient<IFriendDataService, FriendDataService>();
             services.AddTransient<INavigationViewModel, NavigationViewModel>();
+            services.AddTransient<IFriendDetailtViewModel, FriendDetailtViewModel>();
             services.AddTransient<IFriendLookupDataService, LookupDataService>();
+            services.AddSingleton<IEventAggregator, EventAggregator>();
         }
     }
 }

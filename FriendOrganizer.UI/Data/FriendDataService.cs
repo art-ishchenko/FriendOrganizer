@@ -1,8 +1,7 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using FriendOrganizer.DataAccess;
 using FriendOrganizer.Model;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.Data
 {
@@ -15,9 +14,9 @@ namespace FriendOrganizer.UI.Data
             this.ctx = ctx;
         }
 
-        public async Task<IEnumerable<Friend>> GetAllAsync()
+        public async Task<Friend> GetByIdAsync(int id)
         {
-            return await ctx.Friends.ToListAsync();
+            return await ctx.Friends.AsNoTracking().SingleAsync(f => f.Id == id);
         }
     }
 

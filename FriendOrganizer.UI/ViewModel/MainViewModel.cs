@@ -1,19 +1,17 @@
-using System.ComponentModel;
-using System.Collections.ObjectModel;
-using FriendOrganizer.Model;
-using FriendOrganizer.UI.Data;
 using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        public MainViewModel(INavigationViewModel navigationViewModel)
+        public MainViewModel(INavigationViewModel navigationViewModel, IFriendDetailtViewModel friendDetailViewModel)
         {
             NavigationViewModel = navigationViewModel;
+            FriendDetailViewModel = friendDetailViewModel;
         }
 
         public INavigationViewModel NavigationViewModel { get; }
+        public IFriendDetailtViewModel FriendDetailViewModel { get; }
 
         public async Task LoadAsync()
         {
