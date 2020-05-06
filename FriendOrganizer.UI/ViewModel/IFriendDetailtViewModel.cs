@@ -1,11 +1,12 @@
 ﻿using FriendOrganizer.Model;
+using FriendOrganizer.UI.Wrapper;
 using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.ViewModel
 {
     public interface IFriendDetailtViewModel
     {
-        Friend Friend { get; set; }
+        FriendWrapper Friend { get; set; }
 
         Task LoadAsync(int friendId);
     }

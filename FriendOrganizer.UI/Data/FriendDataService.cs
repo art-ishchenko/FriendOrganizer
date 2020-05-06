@@ -19,12 +19,16 @@ namespace FriendOrganizer.UI.Data
 
         public async Task<IEnumerable<Friend>> GetAll()
         {
-            return await ctx.Friends.ToListAsync();
+            return await ctx.Friends
+                 .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<Friend> GetByIdAsync(int id)
         {
-            return await ctx.Friends.AsNoTracking().SingleAsync(f => f.Id == id);
+            return await ctx.Friends
+                .AsNoTracking()
+                .SingleAsync(f => f.Id == id);
         }
 
         public async Task Save(Friend friend)
