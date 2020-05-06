@@ -46,9 +46,9 @@ namespace FriendOrganizer.UI.ViewModel
         }
 
         public ICommand SaveCommand => new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
-        private void OnSaveExecute()
+        private async void OnSaveExecute()
         {
-            dataService.Save(Friend);
+            await dataService.Save(Friend);
             eventAggregator.GetEvent<FriendSavedEvent>().Publish(Friend);
         }
 

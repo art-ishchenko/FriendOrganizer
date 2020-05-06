@@ -8,12 +8,11 @@ namespace FriendOrganizer.DataAccess
 
         public AppDbContext()
         {
-            Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlite("Filename=../FriendsOrganizer.db");
+            builder.UseSqlServer(@"Data Source = .\sqlexpress;Initial Catalog=FriendOrganizer;Integrated Security=true;");
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

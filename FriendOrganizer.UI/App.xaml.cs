@@ -37,5 +37,10 @@ namespace FriendOrganizer.UI
             services.AddTransient<IFriendDetailtViewModel, FriendDetailtViewModel>();
             services.AddSingleton<IEventAggregator, EventAggregator>();
         }
+
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show("Oops, something failed :(");
+        }
     }
 }
