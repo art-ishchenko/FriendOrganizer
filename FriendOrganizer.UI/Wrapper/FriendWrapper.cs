@@ -1,24 +1,25 @@
 ﻿using FriendOrganizer.Model;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows.Markup;
 
 namespace FriendOrganizer.UI.Wrapper
 {
-    public class FriendWrapper : NotifyDataInfoErrorBase
+    public class FriendWrapper : ModelWrapper<Friend>
     {
-        public FriendWrapper(Friend friend)
+        public FriendWrapper(Friend friend) : base(friend)
         {
-            Model = friend;
         }
-
-        public Friend Model { get; }
 
         public int Id
         {
             get
             {
-                return Model.Id;
+                return GetValue<int>();
             }
         }
 
@@ -26,13 +27,11 @@ namespace FriendOrganizer.UI.Wrapper
         {
             get
             {
-                return Model.FirstName;
+                return GetValue<string>();
             }
             set
             {
-                Model.FirstName = value;
-                OnPropertyChanged();
-                ValidateProperty();
+                SetValue<string>(value);
             }
         }
 
@@ -40,12 +39,11 @@ namespace FriendOrganizer.UI.Wrapper
         {
             get
             {
-                return Model.LastName;
+                return GetValue<string>();
             }
             set
             {
-                Model.LastName = value;
-                OnPropertyChanged();
+                SetValue<string>(value);
             }
         }
 
@@ -53,24 +51,22 @@ namespace FriendOrganizer.UI.Wrapper
         {
             get
             {
-                return Model.Email;
+                return GetValue<string>();
             }
             set
             {
-                Model.Email = value;
-                OnPropertyChanged();
+                SetValue<string>(value);
             }
         }
-        
-        private void ValidateProperty([CallerMemberName]string propertyName = null)
+
+        protected override IEnumerable<string> ValidateCustomErrors(string propertyName)
         {
-            ClearErrors(propertyName);
             switch (propertyName)
             {
                 case nameof(FirstName):
                     if (FirstName.Equals("Robot", StringComparison.OrdinalIgnoreCase))
                     {
-                        AddError(propertyName, "Robots are not valid friends");
+                        yield return "Robots are not valid friends";
                     }
                     break;
             }

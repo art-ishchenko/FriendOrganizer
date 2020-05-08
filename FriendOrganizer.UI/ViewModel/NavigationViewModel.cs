@@ -11,13 +11,12 @@ namespace FriendOrganizer.UI.ViewModel
 {
     public class NavigationViewModel : ViewModelBase, INavigationViewModel
     {
-        private readonly IFriendDataService dataService;
+        private readonly IFriendRepository friendRepository;
         private readonly IEventAggregator eventAggregator;
-        private NavigationItemViewModel _selectedFriend;
 
-        public NavigationViewModel(IFriendDataService dataService, IEventAggregator eventAggregator)
+        public NavigationViewModel(IFriendRepository friendRepository, IEventAggregator eventAggregator)
         {
-            this.dataService = dataService;
+            this.friendRepository = friendRepository;
             this.eventAggregator = eventAggregator;
             eventAggregator.GetEvent<FriendSavedEvent>().Subscribe(OnFriendSaved);
         }
@@ -30,28 +29,13 @@ namespace FriendOrganizer.UI.ViewModel
 
         public ObservableCollection<NavigationItemViewModel> Friends { get; set; } = new ObservableCollection<NavigationItemViewModel>();
 
-        public NavigationItemViewModel SelectedFriend
-        {
-            get { return _selectedFriend; }
-            set
-            {
-                _selectedFriend = value;
-                OnPropertyChanged();
-                if (_selectedFriend != null)
-                {
-                    eventAggregator.GetEvent<OpenFriendDetailViewEvent>()
-                        .Publish(_selectedFriend.Id);
-                }
-            }
-        }
-
         public async Task LoadAsync()
         {
-            var friends = await dataService.GetAll();
+            var friends = await friendRepository.GetAll();
             Friends.Clear();
             foreach (var friend in friends)
             {
-                Friends.Add(new NavigationItemViewModel(friend));
+                Friends.Add(new NavigationItemViewModel(eventAggregator, friend));
             }
         }
     }

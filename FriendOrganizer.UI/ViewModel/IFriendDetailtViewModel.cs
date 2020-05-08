@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.ViewModel
 {
-    public interface IFriendDetailtViewModel
+    public interface IFriendDetailViewModel
     {
         FriendWrapper Friend { get; set; }
-
         Task LoadAsync(int friendId);
+        bool HasChanges { get; }
     }
 }

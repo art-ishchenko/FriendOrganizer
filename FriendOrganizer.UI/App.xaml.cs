@@ -1,5 +1,6 @@
 ﻿using FriendOrganizer.DataAccess;
 using FriendOrganizer.UI.Data;
+using FriendOrganizer.UI.View.Services;
 using FriendOrganizer.UI.ViewModel;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,13 +29,14 @@ namespace FriendOrganizer.UI
         }
 
         private void ConfigureServices(IServiceCollection services)
-        {
-            services.AddSingleton<AppDbContext>();
+        {   
+            services.AddTransient<AppDbContext>();
             services.AddTransient<MainViewModel>();
             services.AddTransient<MainWindow>();
-            services.AddTransient<IFriendDataService, FriendDataService>();
+            services.AddTransient<IMessageDialogService, MessageDialogService>();
+            services.AddTransient<IFriendRepository, FriendRepository>();
             services.AddTransient<INavigationViewModel, NavigationViewModel>();
-            services.AddTransient<IFriendDetailtViewModel, FriendDetailtViewModel>();
+            services.AddTransient<IFriendDetailViewModel, FriendDetailViewModel>();
             services.AddSingleton<IEventAggregator, EventAggregator>();
         }
 

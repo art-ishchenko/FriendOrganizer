@@ -1,18 +1,20 @@
 using FriendOrganizer.DataAccess;
 using FriendOrganizer.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.Data
 {
-    public class FriendDataService : IFriendDataService
+    public class FriendRepository : IFriendRepository
     {
         private readonly AppDbContext ctx;
 
-        public FriendDataService(AppDbContext ctx)
+        public FriendRepository(AppDbContext ctx)
         {
             this.ctx = ctx;
         }
@@ -20,22 +22,22 @@ namespace FriendOrganizer.UI.Data
         public async Task<IEnumerable<Friend>> GetAll()
         {
             return await ctx.Friends
-                 .AsNoTracking()
                 .ToListAsync();
         }
 
         public async Task<Friend> GetByIdAsync(int id)
         {
             return await ctx.Friends
-                .AsNoTracking()
                 .SingleAsync(f => f.Id == id);
         }
 
-        public async Task Save(Friend friend)
+        public async Task SaveChangesAsync()
         {
-            ctx.Attach(friend);
-            ctx.Entry(friend).State = EntityState.Modified;
             await ctx.SaveChangesAsync();
+        }
+
+        public bool HasChanges() {
+            return ctx.ChangeTracker.HasChanges();
         }
     }
 
